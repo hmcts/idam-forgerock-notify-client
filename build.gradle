@@ -9,6 +9,10 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven {
+        url  "https://dl.bintray.com/gov-uk-notify/maven"
+    }
     flatDir {
         dirs 'libs'
     }
@@ -16,6 +20,14 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'uk.gov.service.notify:notifications-java-client:3.15.0-RELEASE'
     compileOnly name: 'openam-core-5.5.1-1.0.0'
     compileOnly name: 'openam-auth-hotp-5.5.1-1.0.0'
+
+    testCompile "org.mockito:mockito-core:3+"
+}
+
+// give test dependencies access to compileOnly dependencies to emulate providedCompile
+configurations {
+    testImplementation.extendsFrom compileOnly
 }

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: uk.gov.service.notify:notifications-java-client:3.15.0-RELEASE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/uk.gov.service.notify/notifications-java-client/3.15.0-RELEASE/69589dc50d12108453f41d876c9ffaa1d8a2a561/notifications-java-client-3.15.0-RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/uk.gov.service.notify/notifications-java-client/3.15.0-RELEASE/462e48200607ccc936242f2f48d10608050fb6df/notifications-java-client-3.15.0-RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
