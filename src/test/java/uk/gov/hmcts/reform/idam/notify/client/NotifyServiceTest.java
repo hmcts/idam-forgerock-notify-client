@@ -12,7 +12,6 @@ import java.util.Map;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static uk.gov.hmcts.reform.idam.notify.client.NotifyService.NOTIFICATION_CLIENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.idam.notify.client.NotifyService.OTP_CODE_PARAM;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,6 +19,7 @@ public class NotifyServiceTest {
 
     private static final String AN_EMAIL = "john@doe.com";
     private static final String CODE = "12345";
+    private static final String TEMPLATE_ID = "67ace669-93b5-4055-88b2-c136c63c5511";
     private final Map<String, String> params  = new HashMap<String, String>() {{ put(OTP_CODE_PARAM, CODE); }};
 
     @Mock
@@ -29,7 +29,7 @@ public class NotifyServiceTest {
 
     @Before
     public void setUp() {
-        notifyService = new NotifyService(notificationClient);
+        notifyService = new NotifyService(TEMPLATE_ID, notificationClient);
     }
 
     /**
@@ -39,7 +39,7 @@ public class NotifyServiceTest {
     @Test
     public void sendEmail_shouldSendEmail() throws Exception {
         notifyService.sendEmail(null, AN_EMAIL, null, "", CODE, null);
-        verify(notificationClient).sendEmail(NOTIFICATION_CLIENT_TEMPLATE_ID, AN_EMAIL, params, "", "");
+        verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 
     /**
@@ -49,7 +49,7 @@ public class NotifyServiceTest {
     @Test
     public void sendEmail_shouldDoNothingIfToParamIsNull() throws Exception {
         notifyService.sendEmail(null, null, null, "", CODE, null);
-        verify(notificationClient, never()).sendEmail(NOTIFICATION_CLIENT_TEMPLATE_ID, null, params, "", "");
+        verify(notificationClient, never()).sendEmail(TEMPLATE_ID, null, params, "", "");
 
     }
 
@@ -60,7 +60,7 @@ public class NotifyServiceTest {
     @Test
     public void sendEmail_shouldThrowExceptionIfSendingEmailThrowsException() throws Exception {
         notifyService.sendEmail(null, AN_EMAIL, null, "", CODE, null);
-        verify(notificationClient).sendEmail(NOTIFICATION_CLIENT_TEMPLATE_ID, AN_EMAIL, params, "", "");
+        verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 
     /**
@@ -70,6 +70,6 @@ public class NotifyServiceTest {
     @Test
     public void sendSMSMessage_shouldSendEmail() throws Exception {
         notifyService.sendSMSMessage(null, AN_EMAIL, null, "", CODE, null);
-        verify(notificationClient).sendEmail(NOTIFICATION_CLIENT_TEMPLATE_ID, AN_EMAIL, params, "", "");
+        verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 }

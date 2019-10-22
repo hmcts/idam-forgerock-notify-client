@@ -12,17 +12,19 @@ import java.util.Map;
 
 public class NotifyService implements SMSGateway {
 
-    private static final String NOTIFICATION_CLIENT_API_NAME = "NOTIFICATION_CLIENT_API";
-    static final String NOTIFICATION_CLIENT_TEMPLATE_ID = "67ace669-93b5-4055-88b2-c136c63c5510";
+    private static final String NOTIFY_KEY = "NOTIFY_KEY";
+    private static final String NOTIFY_TEMPLATE_ID = "NOTIFY_TEMPLATE_ID";
     static final String OTP_CODE_PARAM = "code";
-
+    private final String notificationClientTemplateId;
     private final NotificationClientApi notificationClient;
 
     public NotifyService() {
-        notificationClient = new NotificationClient(System.getenv(NOTIFICATION_CLIENT_API_NAME));
+        notificationClientTemplateId = System.getenv(NOTIFY_TEMPLATE_ID);
+        notificationClient = new NotificationClient(System.getenv(NOTIFY_KEY));
     }
 
-    public NotifyService(NotificationClientApi notificationClient) {
+    public NotifyService(String notificationClientTemplateId, NotificationClientApi notificationClient) {
+        this.notificationClientTemplateId = notificationClientTemplateId;
         this.notificationClient = notificationClient;
     }
 
@@ -48,7 +50,7 @@ public class NotifyService implements SMSGateway {
             try {
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put(OTP_CODE_PARAM, code);
-                notificationClient.sendEmail(NOTIFICATION_CLIENT_TEMPLATE_ID, to, parameters,"","");
+                notificationClient.sendEmail(notificationClientTemplateId, to, parameters,"","");
 
             } catch (NotificationClientException e) {
                 throw new AuthLoginException("Failed to send OTP code to " + to, e);
