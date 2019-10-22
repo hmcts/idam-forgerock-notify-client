@@ -1,9 +1,8 @@
 package uk.gov.hmcts.reform.idam.notify.client;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.service.notify.NotificationClientApi;
@@ -11,7 +10,6 @@ import uk.gov.service.notify.NotificationClientApi;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static uk.gov.hmcts.reform.idam.notify.client.NotifyService.NOTIFICATION_CLIENT_TEMPLATE_ID;
@@ -22,14 +20,17 @@ public class NotifyServiceTest {
 
     private static final String AN_EMAIL = "john@doe.com";
     private static final String CODE = "12345";
-
     private final Map<String, String> params  = new HashMap<String, String>() {{ put(OTP_CODE_PARAM, CODE); }};
-
-    @InjectMocks
-    NotifyService notifyService;
 
     @Mock
     private NotificationClientApi notificationClient;
+
+    private NotifyService notifyService;
+
+    @Before
+    public void setUp() {
+        notifyService = new NotifyService(notificationClient);
+    }
 
     /**
      * @verifies send email

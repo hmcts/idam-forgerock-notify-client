@@ -16,7 +16,15 @@ public class NotifyService implements SMSGateway {
     static final String NOTIFICATION_CLIENT_TEMPLATE_ID = "67ace669-93b5-4055-88b2-c136c63c5510";
     static final String OTP_CODE_PARAM = "code";
 
-    private NotificationClientApi notificationClient = new NotificationClient(System.getenv(NOTIFICATION_CLIENT_API_NAME));
+    private final NotificationClientApi notificationClient;
+
+    public NotifyService() {
+        notificationClient = new NotificationClient(System.getenv(NOTIFICATION_CLIENT_API_NAME));
+    }
+
+    public NotifyService(NotificationClientApi notificationClient) {
+        this.notificationClient = notificationClient;
+    }
 
     /**
      * @should send email
