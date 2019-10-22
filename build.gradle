@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'uk.gov.hmcts.reform.idam'
@@ -7,14 +9,53 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+jar {
+    manifest {
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 repositories {
     mavenCentral()
     jcenter()
     maven {
         url  "https://dl.bintray.com/gov-uk-notify/maven"
     }
+    maven {
+        url 'https://dl.bintray.com/hmcts/hmcts-maven'
+    }
     flatDir {
         dirs 'libs'
+    }
+}
+
+publishing {
+    publications {
+        Main(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId rootProject.name
+            version project.version
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['Main']
+    publish = true
+    pkg {
+        repo = 'hmcts-maven'
+        name = "${rootProject.name}"
+        userOrg = 'hmcts'
+        licenses = ['MIT']
+        vcsUrl = "https://github.com/hmcts/${rootProject.name}"
+        version {
+            name = project.version
+        }
     }
 }
 
