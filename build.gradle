@@ -15,6 +15,7 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+    exclude('com/sun/identity/**')
 }
 
 repositories {
@@ -25,9 +26,6 @@ repositories {
     }
     maven {
         url 'https://dl.bintray.com/hmcts/hmcts-maven'
-    }
-    flatDir {
-        dirs 'libs'
     }
 }
 
@@ -62,10 +60,6 @@ bintray {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'uk.gov.service.notify:notifications-java-client:3.15.0-RELEASE'
-    compileOnly name: 'openam-core-5.5.1-1.0.0'
-    compileOnly name: 'openam-auth-hotp-5.5.1-1.0.0'
-    compileOnly name: 'openam-shared-5.5.1-1.0.0'
-
     testCompile "org.mockito:mockito-core:3+"
 }
 
