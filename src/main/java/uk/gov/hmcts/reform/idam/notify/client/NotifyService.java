@@ -12,15 +12,15 @@ import java.util.Map;
 
 public class NotifyService implements SMSGateway {
 
-    private static final String NOTIFY_KEY = "NOTIFY_KEY";
-    private static final String NOTIFY_TEMPLATE_ID = "NOTIFY_TEMPLATE_ID";
+    private static final String NOTIFY_KEY = "notifyApiKey";
+    private static final String NOTIFY_TEMPLATE_ID = "notifyApiTemplateId";
     static final String OTP_CODE_PARAM = "code";
     private final String notificationClientTemplateId;
     private final NotificationClientApi notificationClient;
 
     public NotifyService() {
-        notificationClientTemplateId = System.getenv(NOTIFY_TEMPLATE_ID);
-        notificationClient = new NotificationClient(System.getenv(NOTIFY_KEY));
+        notificationClientTemplateId = System.getProperty(NOTIFY_TEMPLATE_ID);
+        notificationClient = new NotificationClient(System.getProperty(NOTIFY_KEY));
     }
 
     public NotifyService(String notificationClientTemplateId, NotificationClientApi notificationClient) {
