@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'uk.gov.hmcts.reform.idam'
-version '1.1'
+version '1.2'
 
 sourceCompatibility = 1.8
 
@@ -57,7 +57,9 @@ bintray {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'uk.gov.service.notify:notifications-java-client:3.15.0-RELEASE'
+    compile('uk.gov.service.notify:notifications-java-client:3.15.0-RELEASE') {
+        exclude module:"json"
+    }
     testCompile "org.mockito:mockito-core:3+"
 }
 
