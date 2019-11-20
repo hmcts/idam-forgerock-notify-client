@@ -7,7 +7,7 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 script:
-- "./gradlew jar"
+- "./gradlew shadowJar"
 deploy:
 - provider: script
   script: "./gradlew bintrayUpload --info"

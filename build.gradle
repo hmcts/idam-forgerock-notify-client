@@ -2,18 +2,21 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.4'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
+
 group 'uk.gov.hmcts.reform.idam'
-version '1.2'
+version '1.3'
 
 sourceCompatibility = 1.8
-
-jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+shadowJar {
     exclude('com/sun/identity/**')
+    relocate 'org.json', 'shadowed.org.json'
+    relocate 'org.joda.time', 'shadowed.org.joda.time'
+    relocate 'org.apache.commons-logging', 'shadowed.org.apache.commons-logging'
+    relocate 'org.apache.commons-codec', 'shadowed.org.apache.commons-codec'
+    relocate 'org.apache.commons-io', 'shadowed.org.apache.commons-io'
 }
 
 repositories {
