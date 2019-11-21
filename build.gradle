@@ -45,7 +45,6 @@ bintray {
     key = System.getenv('BINTRAY_KEY')
     publications = ['Main']
     publish = true
-    override = true
     pkg {
         repo = 'hmcts-maven'
         name = "${rootProject.name}"

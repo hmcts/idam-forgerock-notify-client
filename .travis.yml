@@ -10,7 +10,6 @@ script:
 - "./gradlew shadowJar"
 deploy:
 - provider: script
-  overwrite: true
   script: "./gradlew bintrayUpload --info"
   skip_cleanup: true
   on:
