@@ -13,18 +13,14 @@ import java.util.Map;
 public class NotifyService implements SMSGateway {
 
     private static final String NOTIFY_KEY = "notifyApiKey";
-    private static final String NOTIFY_TEMPLATE_ID = "notifyApiTemplateId";
     static final String OTP_CODE_PARAM = "code";
-    private final String notificationClientTemplateId;
     private final NotificationClientApi notificationClient;
 
     public NotifyService() {
-        notificationClientTemplateId = System.getProperty(NOTIFY_TEMPLATE_ID);
         notificationClient = new NotificationClient(System.getProperty(NOTIFY_KEY));
     }
 
     public NotifyService(String notificationClientTemplateId, NotificationClientApi notificationClient) {
-        this.notificationClientTemplateId = notificationClientTemplateId;
         this.notificationClient = notificationClient;
     }
 
@@ -46,11 +42,14 @@ public class NotifyService implements SMSGateway {
     public void sendEmail(String from, String to, String subject, String message, String code, Map options)
             throws AuthLoginException {
 
+        // value set in amAuthHOTP_<locale>.properties - see: SIDM-3931
+        final String languageSpecificNotificationClientTemplateId = subject;
+
         if (to != null) {
             try {
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put(OTP_CODE_PARAM, code);
-                notificationClient.sendEmail(notificationClientTemplateId, to, parameters,"","");
+                notificationClient.sendEmail(languageSpecificNotificationClientTemplateId, to, parameters, "", "");
 
             } catch (NotificationClientException e) {
                 throw new AuthLoginException("Failed to send OTP code to " + to, e);

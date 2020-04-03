@@ -38,7 +38,7 @@ public class NotifyServiceTest {
      */
     @Test
     public void sendEmail_shouldSendEmail() throws Exception {
-        notifyService.sendEmail(null, AN_EMAIL, null, "", CODE, null);
+        notifyService.sendEmail(null, AN_EMAIL, TEMPLATE_ID, "", CODE, null);
         verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 
@@ -59,7 +59,7 @@ public class NotifyServiceTest {
      */
     @Test
     public void sendEmail_shouldThrowExceptionIfSendingEmailThrowsException() throws Exception {
-        notifyService.sendEmail(null, AN_EMAIL, null, "", CODE, null);
+        notifyService.sendEmail(null, AN_EMAIL, TEMPLATE_ID, "", CODE, null);
         verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 
@@ -69,7 +69,7 @@ public class NotifyServiceTest {
      */
     @Test
     public void sendSMSMessage_shouldSendEmail() throws Exception {
-        notifyService.sendSMSMessage(null, AN_EMAIL, null, "", CODE, null);
+        notifyService.sendSMSMessage(null, AN_EMAIL, TEMPLATE_ID, "", CODE, null);
         verify(notificationClient).sendEmail(TEMPLATE_ID, AN_EMAIL, params, "", "");
     }
 }
