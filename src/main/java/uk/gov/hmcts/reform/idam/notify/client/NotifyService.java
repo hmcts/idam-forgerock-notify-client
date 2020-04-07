@@ -3,7 +3,6 @@ package uk.gov.hmcts.reform.idam.notify.client;
 
 import com.sun.identity.authentication.modules.hotp.SMSGateway;
 import com.sun.identity.authentication.spi.AuthLoginException;
-import org.apache.commons.lang3.StringUtils;
 import uk.gov.service.notify.NotificationClient;
 import uk.gov.service.notify.NotificationClientApi;
 import uk.gov.service.notify.NotificationClientException;
@@ -22,6 +21,9 @@ public class NotifyService implements SMSGateway {
     private final String notificationClientTemplateId;
     private final NotificationClientApi notificationClient;
 
+    static {
+        LOGGER.warning("Successfully loaded custom Notify client.");
+    }
 
     public NotifyService() {
         notificationClientTemplateId = System.getProperty(NOTIFY_TEMPLATE_ID);
@@ -46,7 +48,6 @@ public class NotifyService implements SMSGateway {
      * @should send email
      * @should do nothing if `to` param is null
      * @should throw exception if sending email throws exception
-     * @should use fallback template id if subject is blank
      * @should use fallback template id if subject is default value
      * @should use subject as template id
      */
@@ -56,9 +57,11 @@ public class NotifyService implements SMSGateway {
 
         final String languageSpecificNotificationClientTemplateId;
 
+        LOGGER.severe(String.format("Sending OTP to: %s, subject: %s", to, subject));
+
         // We are hijacking the i18n mechanism here. The language-specific templateId is being passed as message subject.
         // This condition makes it backwards-compatible.
-        if (StringUtils.isBlank(subject) || OPENAM_DEFAULT_SUBJECT.equalsIgnoreCase(subject)) {
+        if (OPENAM_DEFAULT_SUBJECT.equalsIgnoreCase(subject)) {
             LOGGER.warning("Language-specific Notify templateId is not available. Falling back to the one supplied in env.");
             languageSpecificNotificationClientTemplateId = notificationClientTemplateId;
         } else {

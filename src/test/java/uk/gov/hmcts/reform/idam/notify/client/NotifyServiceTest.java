@@ -81,20 +81,6 @@ public class NotifyServiceTest {
     }
 
     /**
-     * @verifies use fallback template id if subject is blank
-     * @see NotifyService#sendEmail(String, String, String, String, String, Map)
-     */
-    @Test
-    public void sendEmail_shouldUseFallbackTemplateIdIfSubjectIsBlank() throws AuthLoginException, NotificationClientException {
-        final NotificationClientApi clientMock = mock(NotificationClientApi.class);
-        final String testTemplateId = "test";
-        final NotifyService notifyService = new NotifyService(testTemplateId, clientMock);
-
-        notifyService.sendEmail(AN_EMAIL, AN_EMAIL, "  ", null, CODE, null);
-        verify(clientMock).sendEmail(eq(testTemplateId), eq(AN_EMAIL), eq(params), any(), any());
-    }
-
-    /**
      * @verifies use fallback template id if subject is default value
      * @see NotifyService#sendEmail(String, String, String, String, String, Map)
      */
