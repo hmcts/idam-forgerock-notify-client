@@ -10,8 +10,9 @@ The Notify client uses two template ids, one for English and one for bi-lingual,
 the same folder as the client. In order to change these values, please make a change in the `cnp-idam-packer`
 git repository. **Do not repack the file manually** as it will be overwritten by Ansible.
 
-1 java opts variable is required:
+2 java opts variables required:
 * `notifyApiKey` - the notification client api key.
+* `notifyApiTemplateId` - the notification client template id (fallback for when there is no language-specific template id).
 
 You will also have to specify the Gateway Implementation Class to use this notify client, which is: `uk.gov.hmcts.reform.idam.notify.client.NotifyService`.
 
