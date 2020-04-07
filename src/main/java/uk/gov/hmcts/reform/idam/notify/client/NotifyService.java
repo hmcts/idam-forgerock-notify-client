@@ -57,7 +57,7 @@ public class NotifyService implements SMSGateway {
 
         final String languageSpecificNotificationClientTemplateId;
 
-        LOGGER.severe(String.format("Sending OTP to: %s, subject: %s", to, subject));
+        LOGGER.fine(String.format("Sending OTP to: %s, subject: %s", to, subject));
 
         // We are hijacking the i18n mechanism here. The language-specific templateId is being passed as message subject.
         // This condition makes it backwards-compatible.
