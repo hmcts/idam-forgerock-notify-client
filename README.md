@@ -21,7 +21,7 @@ You will also have to specify the Gateway Implementation Class to use this notif
 * 1.1 - User java opts rather than the system evn variables.
 * 1.2 - Banish json from dependencies to stop interference with Forgerock's libs.
 * 1.3 - Add release notes. Introduce dependency shadowing for a number of dependencies to reduce potential interference. 
-* 2.0 - Add support for language-specific notifications - English and bi-lingual (English and Welsh).
+* 1.4 - Add support for language-specific notifications - English and bi-lingual (English and Welsh).
 
 ## Distribution
 Released jars of all versions are available here:
