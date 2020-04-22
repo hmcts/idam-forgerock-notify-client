@@ -31,10 +31,12 @@ repositories {
 
 publishing {
     publications {
-        Main(MavenPublication) {
-            from components.java
+        shadow(MavenPublication) {
             groupId project.group
             artifactId rootProject.name
+            artifact(shadowJar) {
+                classifier ''
+            }
             version project.version
         }
     }
@@ -43,8 +45,9 @@ publishing {
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    publications = ['Main']
+    publications = ['shadow']
     publish = true
+    dryRun = false
     pkg {
         repo = 'hmcts-maven'
         name = "${rootProject.name}"
