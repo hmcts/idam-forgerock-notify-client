@@ -18,6 +18,7 @@ public class NotifyService implements SMSGateway {
     private static final String NOTIFY_TEMPLATE_ID = "notifyApiTemplateId";
     static final String OTP_CODE_PARAM = "code";
     static final String OPENAM_DEFAULT_SUBJECT = "OpenAM One Time Password";
+    static final String OPENAM_DEFAULT_SENDER = "idamadmin@reform.hmcts.net";
     private final String notificationClientTemplateId;
     private final NotificationClientApi notificationClient;
 
@@ -57,17 +58,23 @@ public class NotifyService implements SMSGateway {
 
         final String languageSpecificNotificationClientTemplateId;
 
-        LOGGER.fine(String.format("Sending OTP to: %s, subject: %s", to, subject));
-
         // We are hijacking the i18n mechanism here. The language-specific templateId is being passed as message subject.
         // This condition makes it backwards-compatible.
+        // This path is for IDAM >=2.1
         if (OPENAM_DEFAULT_SUBJECT.equalsIgnoreCase(subject)) {
-            LOGGER.warning("Language-specific Notify templateId is not available. Falling back to the one supplied in env.");
-            languageSpecificNotificationClientTemplateId = notificationClientTemplateId;
+            // This path is for IDAM >=2.2 which uses AuthTrees and requires a different language injection mechanism
+            // This time using the "from" filed.
+            if (OPENAM_DEFAULT_SENDER.equalsIgnoreCase(from)) {
+                LOGGER.warning("Language-specific Notify templateId is not available. Falling back to the one supplied in env.");
+                languageSpecificNotificationClientTemplateId = notificationClientTemplateId;
+            } else {
+                languageSpecificNotificationClientTemplateId = from;
+            }
         } else {
             // value set in amAuthHOTP_<locale>.properties - see: SIDM-3931
             languageSpecificNotificationClientTemplateId = subject;
         }
+
 
         if (to != null) {
             try {
