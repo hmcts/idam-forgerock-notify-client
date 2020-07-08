@@ -57,7 +57,7 @@ public class NotifyService implements SMSGateway {
             throws AuthLoginException {
 
         final String languageSpecificNotificationClientTemplateId;
-        
+
         // We are hijacking the i18n mechanism here. The language-specific templateId is being passed as message subject.
         // This condition makes it backwards-compatible.
         // This path is for IDAM >=2.1
