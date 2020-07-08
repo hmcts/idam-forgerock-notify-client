@@ -64,7 +64,7 @@ public class NotifyService implements SMSGateway {
         if (OPENAM_DEFAULT_SUBJECT.equalsIgnoreCase(subject)) {
             // This path is for IDAM >=2.2 which uses AuthTrees and requires a different language injection mechanism
             // This time using the "from" filed.
-            if (OPENAM_DEFAULT_SENDER.equalsIgnoreCase(to)) {
+            if (OPENAM_DEFAULT_SENDER.equalsIgnoreCase(from)) {
                 LOGGER.warning("Language-specific Notify templateId is not available. Falling back to the one supplied in env.");
                 languageSpecificNotificationClientTemplateId = notificationClientTemplateId;
             } else {
